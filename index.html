@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Единый реестр МО РФ</title>
+    <style>
+        :root {
+            --bg-deep: #0a0a0c;
+            --card-bg: #161618;
+            --input-bg: #1c1c1e;
+            --accent-gold: linear-gradient(180deg, #e5c173 0%, #b89548 100%);
+            --text-gray: #8e8e93;
+            --red-soft: rgba(255, 69, 58, 0.15);
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Шапка */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+        .header-left { display: flex; align-items: center; gap: 12px; }
+        .logo-circle {
+            width: 40px; height: 40px;
+            background: #d4af37;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: black; font-weight: bold; font-size: 20px;
+        }
+        .header-title div:first-child { font-weight: bold; font-size: 16px; }
+        .header-title div:last-child { font-size: 11px; color: var(--text-gray); }
+        .status-badge {
+            background: rgba(48, 209, 88, 0.15);
+            color: #30d158;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: flex; align-items: center; gap: 5px;
+        }
+
+        /* Плашка уведомления */
+        .alert-banner {
+            background: var(--red-soft);
+            border: 1px solid rgba(255, 69, 58, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex; gap: 12px;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        .alert-banner b { color: #ff453a; }
+
+        /* Статистика */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            background: var(--card-bg);
+            padding: 20px 10px;
+            border-radius: 16px;
+            text-align: center;
+        }
+        .stat-val { font-size: 20px; font-weight: 800; display: block; margin-bottom: 4px; }
+        .stat-lbl { font-size: 10px; color: var(--text-gray); text-transform: uppercase; }
+
+        /* Форма поиска */
+        .search-section {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 16px;
+        }
+        .search-label {
+            font-size: 13px; color: var(--text-gray);
+            margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+        }
+        .input-box {
+            width: 100%;
+            background: var(--input-bg);
+            border: 1px solid #2c2c2e;
+            padding: 16px;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+            outline: none;
+        }
+        .btn-find {
+            width: 100%;
+            background: var(--accent-gold);
+            color: #1a1a1a;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px; font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        .btn-find:active { transform: scale(0.98); }
+
+        /* Окно ошибки / результата */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(5px);
+            justify-content: center; align-items: center;
+            z-index: 100;
+            padding: 20px;
+        }
+        .modal {
+            background: #1c1c1e;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 300px;
+            border: 1px solid #333;
+        }
+        .modal h3 { margin-top: 0; color: #ff453a; }
+        .modal p { font-size: 14px; color: #ccc; line-height: 1.5; }
+        .btn-dl {
+            background: #30d158;
+            color: white; border: none; padding: 12px 20px;
+            border-radius: 10px; font-weight: bold; cursor: pointer;
+            margin-top: 15px; width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="header-left">
+            <div class="logo-circle">🛡</div>
+            <div class="header-title">
+                <div>Единый реестр МО РФ</div>
+                <div>Федеральная база пропавших</div>
+            </div>
+        </div>
+        <div class="status-badge">● Защищено</div>
+    </div>
+
+    <div class="alert-banner">
+        <span>⚠️</span>
+        <div>Обновление базы данных от <b>3 марта 2026</b>. Добавлено <b>1 247</b> новых записей.</div>
+    </div>
+
+    <div class="stats-row">
+        <div><span class="stat-val">48 392</span><span class="stat-lbl">В базе</span></div>
+        <div><span class="stat-val">1 247</span><span class="stat-lbl">Новых</span></div>
+        <div><span class="stat-val">12 841</span><span class="stat-lbl">Розыск</span></div>
+    </div>
+
+    <div class="search-section">
+        <div class="search-label">🔍 Поиск по ФИО военнослужащего</div>
+        <input type="text" id="nameInput" class="input-box" placeholder="Введите ФИО...">
+        <button class="btn-find" onclick="startSearch()">Найти</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal">
+    <div class="modal">
+        <h3>Доступ ограничен</h3>
+        <p id="modalText">Для просмотра детальной информации по запросу необходимо установить защищенное приложение "Реестр МО".</p>
+        <button class="btn-dl" onclick="location.reload()">Скачать приложение</button>
+    </div>
+</div>
+
+<script>
+    function startSearch() {
+        const name = document.getElementById('nameInput').value;
+        const btn = document.querySelector('.btn-find');
+        
+        if (!name.trim()) {
+            alert("Пожалуйста, введите ФИО");
+            return;
+        }
+
+        // Имитация процесса поиска
+        btn.innerText = "Поиск...";
+        btn.disabled = true;
+
+        setTimeout(() => {
+            document.getElementById('modal').style.display = 'flex';
+            btn.innerText = "Найти";
+            btn.disabled = false;
+        }, 1500); // Поиск длится 1.5 секунды
+    }
+</script>
+
+</body>
+</html>
